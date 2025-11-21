@@ -273,7 +273,11 @@ footer { padding:2rem 0; text-align:center; font-size:0.875rem; color:#6b7280; }
     <form id="contactForm" style="background:white;color:black;padding:1.5rem;border-radius:0.5rem;">
       <input name="parentName" placeholder="Parent / Guardian name" required>
       <input name="studentName" placeholder="Student name" required>
-      <input name="year" placeholder="Year (10 or 11)" required>
+      <select name="year" required class="p-2 border rounded-md">
+  <option value="" disabled selected>Select Year Group</option>
+  <option value="Year 10">Year 10</option>
+  <option value="Year 11">Year 11</option>
+</select>
       <input name="gradeTarget" placeholder="Target grade (eg. 6)">
       <input name="email" placeholder="Email" type="email" required>
       <input name="phone" placeholder="Phone">
@@ -333,4 +337,5 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
 
 </body>
 </html>
+
 
