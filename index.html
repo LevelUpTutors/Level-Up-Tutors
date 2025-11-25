@@ -1,342 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level Up Tutors</title>
-<link href="https://fonts.googleapis.com/css2?family=Obitron&display=swap" rel="stylesheet">
-<style>
-/* ----------------- Base ----------------- */
-body { font-family:'Obitron',sans-serif; margin:0; background:white; color:#1f2937; scroll-behavior:smooth; }
-h1,h2,h3,h4,h5,h6 { margin:0; }
-ul { padding-left:1.25rem; margin:0; }
-a { text-decoration:none; color:inherit; transition: color 0.3s; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Level Up Tutors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Obitron&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent: #fb923c;
+      --bg: #070707;
+      --panel: #0f0f0f;
+      --muted: #cbd5df;
+      --muted-2: #9ca3af;
+      --border: #111;
+      --nav-text: #d1d5db;
+    }
 
-/* ----------------- Containers ----------------- */
-.container { max-width:1200px; margin:auto; padding:0 1.5rem; }
-section { padding:4rem 0; }
+    html,body{margin:0;padding:0;height:100%}
+    body {
+      font-family:'Obitron',sans-serif;
+      margin:0;
+      background:var(--bg);
+      color:#fff;
+      scroll-behavior:smooth;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .container { max-width:1100px; margin:0 auto; padding:0 1.25rem; }
+    h1,h2,h3,h4,h5,h6 { margin:0; }
+    ul { padding-left:1.25rem; margin:0; }
+    a { text-decoration:none; color:inherit; transition: color 0.3s; }
+    button { font-family:inherit; }
 
-/* ----------------- Colors ----------------- */
-.bg-gray { background:#f9fafb; }
-.bg-black { background:black; color:#fb923c; }
-.text-white { color:white; }
-.text-gray { color:#4b5563; }
-.text-gray-light { color:#6b7280; }
-.text-gray-lighter { color:#9ca3af; }
+    /* Header: logo left, title center, nav right */
+    header {
+      position:sticky;
+      top:0;
+      z-index:60;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid var(--border);
+      transition: transform 0.28s ease, padding 0.28s ease, box-shadow 0.28s ease;
+      padding:1rem 0;
+    }
+    header.shift-up { transform: translateY(-6px); box-shadow: 0 8px 18px rgba(0,0,0,0.35); }
 
-/* ----------------- Flex & Grid ----------------- */
-.flex { display:flex; }
-.flex-wrap { flex-wrap:wrap; }
-.flex-1 { flex:1; min-width:300px; }
-.gap-2 { gap:1rem; }
-.grid { display:grid; gap:1.5rem; }
-.grid-3 { grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); }
+    .header-inner {
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      justify-content:space-between;
+    }
 
-/* ----------------- Header ----------------- */
-header {
-  position:sticky; top:0; z-index:40;
-  background: rgba(255,255,255,0.85); backdrop-filter: blur(4px);
-  border-bottom:1px solid #e5e7eb;
-  transition: all 0.3s ease; padding:1rem 0;
+    /* left logo */
+    .logo-left {
+      display:flex;
+      align-items:center;
+      gap:0.85rem;
+      min-width:180px;
+    }
+    .logo-left img {
+      width:72px; /* slightly larger per request */
+      height:72px;
+      border-radius:8px;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* centre title */
+    .brand-center {
+      text-align:center;
+      flex:1 1 auto;
+    }
+    .brand-center .title {
+      font-size:1.25rem;
+      font-weight:900;
+      letter-spacing:0.3px;
+    }
+    .brand-center .subtitle {
+      font-size:0.8rem;
+      color:var(--muted-2);
+    }
+
+    /* right nav */
+    .nav-right {
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      min-width:260px;
+      justify-content:flex-end;
+    }
+    .nav-right nav { display:flex; gap:0.6rem; align-items:center; }
+
+    .nav-right button {
+      background:none;
+      border:none;
+      color:var(--nav-text);
+      cursor:pointer;
+      padding:0.45rem 0.6rem;
+      border-radius:6px;
+      font-weight:600;
+      transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+      font-size:0.98rem;
+    }
+    /* hover lights up orange */
+    .nav-right button:hover,
+    .nav-right button:focus {
+      color:var(--accent);
+      outline:none;
+      transform:translateY(-2px);
+      background: rgba(251,146,60,0.06);
+    }
+    .nav-right button.active {
+      color:var(--accent);
+      background: rgba(251,146,60,0.08);
+    }
+
+    /* mobile */
+    @media(max-width:880px){
+      .logo-left img { width:56px; height:56px; }
+      .brand-center .title { font-size:1rem; }
+      .nav-right { min-width:120px; }
+    }
+    @media(max-width:700px){
+      .header-inner { flex-direction:column; gap:0.6rem; align-items:stretch; }
+      .logo-left { justify-content:center; min-width:auto; }
+      .brand-center { order:2; }
+      .nav-right { justify-content:center; order:3; }
+    }
+
+    /* ----------------- HOME (Set B exact styles and content) ----------------- */
+    /* We'll replicate Set B hero exactly so Home appears identical */
+    /* --- GLOBAL STYLES (home-specific) --- */
+    .home-hero { text-align:center; padding:8rem 1.5rem; }
+    .home-hero .container { max-width:1200px; margin:auto; padding:0 1.5rem; }
+    .home-hero h1 { font-size:4rem; line-height:1.2; max-width:800px; margin:auto; }
+    .home-hero p { opacity:0.8; max-width:700px; margin:1.5rem auto 0; font-size:1.3rem; }
+    .home-cta { display:flex; justify-content:center; gap:1.5rem; margin-top:2.5rem; }
+    .home-cta .btn-primary { background:var(--accent); color:#000; padding:1rem 2rem; border-radius:50px; font-size:1.2rem; font-weight:600; text-decoration:none; display:inline-block; }
+    .home-cta .btn-primary:hover{ background:#ffb672; }
+    .home-cta .btn-secondary { border:2px solid var(--accent); color:var(--accent); padding:1rem 2rem; border-radius:50px; font-size:1.2rem; text-decoration:none; display:inline-block; }
+    .home-cta .btn-secondary:hover{ border-color:#fff; color:#fff; }
+
+    /* ----------------- General sections (Set C styling) ----------------- */
+    .section { padding:64px 0; }
+    .section .container { max-width:1100px; margin:0 auto; padding:0 1.25rem; }
+    .section h2 { font-size:1.8rem; text-align:center; margin-bottom:1rem; color:var(--accent); }
+    .muted { color: var(--muted); }
+
+    .bg-dark { background:#0b0b0b; }
+    .grid { display:grid; gap:1.25rem; }
+    .grid-3 { grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); }
+    .card { background:var(--panel); border:1px solid #1a1a1a; border-radius:10px; padding:1.25rem; }
+
+    input,textarea,select{width:100%;padding:0.6rem;border-radius:8px;border:1px solid #222;background:#0b0b0b;color:#fff;margin-top:0.6rem}
+    input:focus,textarea:focus,select:focus{outline:none;box-shadow:0 0 0 4px rgba(251,146,60,0.08);border-color:var(--accent)}
+    .form-card{background:var(--panel);padding:1.25rem;border-radius:10px}
+
+    footer{padding:2rem 0;text-align:center;color:var(--muted-2);background:transparent;border-top:1px solid var(--border)}
+
+    @media(max-width:600px){ .brand-center .title{font-size:1rem} .home-hero h1{font-size:2rem} }
+
+    /* Classes/pricing/testimonials grids from earlier */
+    .class-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+    .price-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+    .test-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+
+/* Contact form button styling */
+.btn-primary {
+  background: var(--accent);
+  color: #080808;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform .18s, background .18s;
 }
-header.scrolled { padding:0.5rem 0; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-header img { width:40px; height:40px; object-fit:contain; border-radius:0.25rem; }
-
-/* ----------------- Nav ----------------- */
-nav button {
-  background:none; border:none; cursor:pointer; margin-right:1rem; font-size:0.875rem; transition: color 0.3s;
+.btn-primary:hover {
+  transform: translateY(-3px);
+  background: #f97316;
 }
-nav button:hover, nav button.active { color:#fb923c; font-weight:bold; }
 
-/* ----------------- Buttons ----------------- */
-.btn-orange, .btn-orange:hover { background-color:#fb923c; color:white; padding:0.5rem 1rem; border-radius:0.375rem; font-weight:600; cursor:pointer; border:none; transition: transform 0.2s, background 0.3s; }
-.btn-orange:hover { background-color:#f97316; transform: translateY(-2px); }
-.btn-black, .btn-black:hover { background-color:black; color:#fb923c; padding:0.5rem 1rem; border-radius:0.375rem; font-weight:bold; cursor:pointer; border:none; width:100%; transition: transform 0.2s, background 0.3s; }
-.btn-black:hover { background-color:#111; transform: translateY(-2px); }
+.btn-outline {
+  padding: 0.78rem 1.45rem;
+  border-radius: 999px;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .18s, border-color .18s, color .18s;
+}
+.btn-outline:hover {
+  transform: translateY(-3px);
+  border-color: #f97316;
+  color: #f97316;
+}
 
-/* ----------------- Cards ----------------- */
-.card { border:1px solid #e5e7eb; border-radius:0.5rem; padding:1.5rem; background:white; transition: transform 0.3s, box-shadow 0.3s; }
-.card:hover { transform: translateY(-5px); box-shadow:0 10px 15px rgba(0,0,0,0.1); }
-.border-l-orange { border-left:4px solid #fb923c; padding-left:1rem; }
 
-/* ----------------- Form ----------------- */
-input, textarea { width:100%; padding:0.5rem; border:1px solid #d1d5db; border-radius:0.375rem; margin-bottom:0.5rem; transition: border 0.3s, box-shadow 0.3s; }
-input:focus, textarea:focus { border-color:#fb923c; box-shadow:0 0 0 3px rgba(251,146,60,0.3); outline:none; }
-
-/* ----------------- Footer ----------------- */
-footer { padding:2rem 0; text-align:center; font-size:0.875rem; color:#6b7280; }
-
-/* ----------------- Responsive nav ----------------- */
-@media (max-width:768px) { #nav-desktop { display:none; } #nav-mobile { display:block; } }
-@media (min-width:769px) { #nav-desktop { display:flex; } #nav-mobile { display:none; } }
-
-/* ----------------- Animations ----------------- */
-.section { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-.section.visible { opacity:1; transform:translateY(0); }
-</style>
+  </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="container flex" style="justify-content:space-between; align-items:center;">
-    <div class="flex gap-2" style="align-items:center;">
-      <img src="assets/logo.png" alt="Level Up Tutors Logo">
+  <!-- HEADER: logo left, business name centered, nav right -->
+  <header id="siteHeader">
+    <div class="container header-inner">
+      <!-- Left: Logo -->
+      <div class="logo-left">
+        <img src="assets/logo.png" alt="Level Up Tutors Logo">
+      </div>
+
+      <!-- Center: Brand -->
+      <div class="brand-center" aria-hidden="false">
+        <div class="title">Level Up Tutors</div>
+        <div class="subtitle">GCSE Maths — Years 10 &amp; 11</div>
+      </div>
+
+      <!-- Right: Nav -->
+      <div class="nav-right">
+        <nav aria-label="Primary">
+          <button data-target="home" onclick="scrollToSection('home')">Home</button>
+          <button data-target="about" onclick="scrollToSection('about')">About</button>
+          <button data-target="classes" onclick="scrollToSection('classes')">Classes</button>
+          <button data-target="pricing" onclick="scrollToSection('pricing')">Pricing</button>
+          <button data-target="testimonials" onclick="scrollToSection('testimonials')">Testimonials</button>
+          <button data-target="contact" onclick="scrollToSection('contact')">Contact</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME: exactly as Set B -->
+  <section id="home" class="home-hero">
+    <div class="container">
+      <h1>Empowering Students to <span style="color:var(--accent);">Level Up</span> Their Learning</h1>
+      <p style="opacity:0.8; max-width:700px; margin:1.5rem auto 0; font-size:1.3rem;">Private tutoring designed to build confidence, mastery, and academic excellence.</p>
+      <div class="home-cta">
+        <a href="#contact" class="btn-primary">Book a Session</a>
+        <a href="#classes" class="btn-secondary">View Classes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT: rewritten based on Set B content -->
+  <section id="about" class="section bg-dark">
+    <div class="container">
+      <h2 style="text-align:left">About</h2>
+      <p class="muted" style="margin-top:1rem; max-width:880px;">Level Up Tutors provides personalised, high-quality GCSE Maths tuition for students in Years 10 and 11.</p>
+      <p class="muted" style="margin-top:0.75rem; max-width:880px;">Students join one of three small classes grouped by target grade so every lesson is paced correctly and focused on the skills they need to gain marks on the exam.</p>
+      <p class="muted" style="margin-top:0.75rem; max-width:880px;">With a focus on confidence, understanding, and long-term mastery, we help students develop effective learning skills that last a lifetime.</p>
+
+      <div class="grid grid-3" style="margin-top:1.25rem;">
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:800">Expert Tuition</h3>
+          <p class="muted" style="margin-top:0.5rem;">Experienced GCSE tutor with a track record of grade improvements.</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:800">Exam Focused</h3>
+          <p class="muted" style="margin-top:0.5rem;">Weekly exam-practice and targeted feedback to maximise marks.</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:800">Excel with confidence</h3>
+          <p class="muted" style="margin-top:0.5rem;">We build strong academic confidence through encouragement, structured guidance, and continuous support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLASSES: Set C layout, revised wording -->
+  <section id="classes" class="section">
+    <div class="container">
+      <h2 style="text-align:left">Classes</h2>
+      <div class="class-grid" style="margin-top:1rem;">
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:700">Grades 3–5</h3>
+          <p class="muted" style="margin-top:0.5rem">Core Building Blocks: arithmetic, fractions, algebra basics, foundations of geometry and problem solving.</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:700">Grades 6–7</h3>
+          <p class="muted" style="margin-top:0.5rem">Build exam technique, timing, and targeted topic work.</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:700">Grades 8–9</h3>
+          <p class="muted" style="margin-top:0.5rem">Advanced problem solving, past paper mastery, targeted marksmanship, and higher level techniques.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING: Set C format, updated descriptions -->
+  <section id="pricing" class="section bg-dark">
+    <div class="container">
+      <h2 style="text-align:left">Pricing</h2>
+      <div class="price-grid" style="margin-top:1rem;">
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:700">Pay-as-you-go</h3>
+          <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">£29.99 <span style="font-size:0.85rem;font-weight:500">/ 60 mins</span></div>
+          <p class="muted" style="margin-top:0.5rem">Ideal for trial lessons or occasional tutoring.</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:700">4-session package</h3>
+          <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">£99.99 <span style="font-size:0.85rem;font-weight:500">/ 4×60 mins</span></div>
+          <p class="muted" style="margin-top:0.5rem">Prepaid block with progression notes.</p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--accent);font-weight:700">10-session package</h3>
+          <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">£199.99 <span style="font-size:0.85rem;font-weight:500">/ 10×60 mins</span></div>
+          <p class="muted" style="margin-top:0.5rem">Best value for intensive exam preparation. Progress report after session 5.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS: exactly Set B content/format -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <h2 style="text-align:left">Testimonials</h2>
+      <div class="test-grid" style="margin-top:1rem;">
+        <div style="background:#111; border:1px solid #222; padding:2rem; border-radius:1rem; font-style:italic;">"My son's confidence in maths has transformed since joining Level Up Tutors!" – Parent</div>
+        <div style="background:#111; border:1px solid #222; padding:2rem; border-radius:1rem; font-style:italic;">"Clear explanations and fun lessons. I finally understand Maths!" – Student</div>
+        <div style="background:#111; border:1px solid #222; padding:2rem; border-radius:1rem; font-style:italic;">"Our daughter went from a grade 4 to a grade 7 in GCSE Mathematics." – Parent</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT: Set C form exactly -->
+  <section id="contact" class="section bg-dark">
+    <div class="container" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;align-items:start;">
       <div>
-        <div style="font-weight:bold;">Level Up Tutors</div>
-        <div style="font-size:0.75rem;color:#6b7280;">GCSE Maths — Years 10 & 11</div>
+        <h2 style="text-align:left">Contact</h2>
+        <p class="muted" style="margin-top:0.5rem">Book a free 20-minute consultation — complete the form and we'll reply within 24 hours to confirm your preferred slot.</p>
       </div>
+
+      <form id="contactForm" class="form-card" aria-label="Booking form">
+        <input name="parentName" placeholder="Parent / Guardian name" required>
+        <input name="studentName" placeholder="Student name" required>
+        <select name="year" required>
+          <option value="" disabled selected>Select Year Group</option>
+          <option value="Year 10">Year 10</option>
+          <option value="Year 11">Year 11</option>
+        </select>
+        <input name="gradeTarget" placeholder="Target grade (eg. 6)">
+        <input name="email" placeholder="Email" type="email" required>
+        <input name="phone" placeholder="Phone">
+        <textarea name="message" placeholder="Message / availability" rows="4"></textarea>
+        <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+    <button class="btn-primary" type="submit">Send booking request</button>
+    <button type="button" class="btn-outline" onclick="scrollToSection('classes')">View classes</button>
+</div>
+        <p id="formSuccess" style="color:#7ed29a; display:none; margin-top:0.5rem;">Thanks — booking request sent. We'll contact you shortly.</p>
+      </form>
     </div>
-    <nav id="nav-desktop">
-      <button data-target="home" onclick="scrollToSection('home')">Home</button>
-      <button data-target="about" onclick="scrollToSection('about')">About</button>
-      <button data-target="classes" onclick="scrollToSection('classes')">Classes</button>
-      <button data-target="pricing" onclick="scrollToSection('pricing')">Pricing</button>
-      <button class="btn-orange" data-target="contact" onclick="scrollToSection('contact')">Book / Contact</button>
-    </nav>
-    <div id="nav-mobile" style="display:none;">
-      <button class="btn-orange" onclick="scrollToSection('contact')">Book</button>
+  </section>
+
+  <!-- FOOTER (Set C unchanged) -->
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Level Up Tutors — Online GCSE Maths tuition • <span class="muted-2">Cancellation policy: 24-hour notice</span>
     </div>
-  </div>
-</header>
+  </footer>
 
-<!-- HERO -->
-<section id="home" class="container flex flex-wrap gap-2 section">
-  <div class="flex-1">
-    <h1 style="font-size:2.5rem;font-weight:800;line-height:1.2;">Level Up your GCSE Maths grade — confident, exam-ready students.</h1>
-    <p style="margin-top:1.5rem; max-width:600px;">Live online tuition focused on Years 10–11. Small, differentiated classes for every grade band (3–5,6–7,8–9) with clear learning targets, practice under exam conditions, and weekly progress checks.</p>
-    <div style="margin-top:2rem;">
-      <button class="btn-orange" onclick="scrollToSection('contact')">Book a free 20‑min consult</button>
-      <button onclick="scrollToSection('pricing')" style="margin-left:1rem;padding:0.5rem 1rem;border:1px solid #d1d5db;border-radius:0.375rem;transition:all 0.3s;" onmouseover="this.style.borderColor='#fb923c';" onmouseout="this.style.borderColor='#d1d5db';">View pricing</button>
-    </div>
-    <ul style="margin-top:2rem;color:#4b5563;">
-      <li>• Structured weekly lessons — clear homework & tracking</li>
-      <li>• Exam-style practice & targeted feedback</li>
-      <li>• Small classes grouped by target grade</li>
-    </ul>
-  </div>
-  <div class="flex-1">
-    <div class="card">
-      <h3 style="font-weight:bold;">Open classes (sample)</h3>
-      <div class="border-l-orange" style="margin-top:1rem;">Grades 3–5 — Foundations & problem solving — building confidence</div>
-      <div class="border-l-orange" style="margin-top:0.5rem;">Grades 6–7 — Consolidation & techniques for target grade</div>
-      <div class="border-l-orange" style="margin-top:0.5rem;">Grades 8–9 — Top-tier practice, exam strategies & advanced topics</div>
-      <div style="margin-top:1rem;">
-        <button class="btn-black" onclick="scrollToSection('contact')">Book a spot</button>
-      </div>
-    </div>
-  </div>
-</section>
+  <script>
+    // set year
+    const yearEl = document.getElementById('year');
+    if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-<!-- ABOUT -->
-<section id="about" class="bg-gray section">
-  <div class="container">
-    <h2 style="font-size:2rem;font-weight:bold;">About Level Up Tutors</h2>
-    <p style="margin-top:1rem;color:#4b5563;">We specialise in GCSE Maths tuition for Years 10 and 11. Our lessons are designed around exam specifications, high-quality practice questions, and short, measurable learning goals. Students join one of three small classes grouped by target grade so every lesson is paced correctly and focused on the skills they need to gain marks on the exam.</p>
-    <div class="grid grid-3" style="margin-top:2rem;">
-      <div class="card">
-        <h3 style="font-weight:bold;">Expert tuition</h3>
-        <p style="color:#6b7280;margin-top:0.5rem;">Experienced GCSE tutors with a track record of grade improvements.</p>
-      </div>
-      <div class="card">
-        <h3 style="font-weight:bold;">Small classes</h3>
-        <p style="color:#6b7280;margin-top:0.5rem;">Maximum 6 students per class — personalised attention in a calm online environment.</p>
-      </div>
-      <div class="card">
-        <h3 style="font-weight:bold;">Exam-focused</h3>
-        <p style="color:#6b7280;margin-top:0.5rem;">Weekly exam-practice and targeted feedback to maximise marks.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CLASSES -->
-<section id="classes" class="section">
-  <div class="container">
-    <h2 style="font-size:2rem;font-weight:bold;">Classes</h2>
-    <p style="margin-top:0.5rem;color:#4b5563;">Three differentiated classes let students learn with peers at the same level while receiving targeted instruction.</p>
-    <div class="grid grid-3" style="margin-top:1.5rem;">
-      <div class="card">
-        <div style="color:#fb923c;font-weight:bold;">Grades 3–5</div>
-        <h3 style="margin-top:0.5rem;font-weight:bold;">Foundations & confidence</h3>
-        <p style="color:#4b5563;margin-top:0.5rem;">Core building blocks: arithmetic, fractions, simple algebra, foundations of geometry and problem-solving strategies.</p>
-        <ul style="margin-top:0.5rem;color:#4b5563;">
-          <li>• Max 6 students</li>
-          <li>• Weekly 60‑minute live lesson</li>
-          <li>• Focused homework & step-by-step feedback</li>
-        </ul>
-        <button class="btn-orange" style="margin-top:0.5rem;" onclick="scrollToSection('contact')">Enrol / Book</button>
-      </div>
-      <div class="card">
-        <div style="color:#fb923c;font-weight:bold;">Grades 6–7</div>
-        <h3 style="margin-top:0.5rem;font-weight:bold;">Consolidation & technique</h3>
-        <p style="color:#4b5563;margin-top:0.5rem;">Develop reliable methods for common question types, build exam technique and timing, and target weak topics.</p>
-        <ul style="margin-top:0.5rem;color:#4b5563;">
-          <li>• Max 6 students</li>
-          <li>• Weekly 90‑minute lesson option available</li>
-          <li>• Progress review every 4 weeks</li>
-        </ul>
-        <button class="btn-orange" style="margin-top:0.5rem;" onclick="scrollToSection('contact')">Enrol / Book</button>
-      </div>
-      <div class="card">
-        <div style="color:#fb923c;font-weight:bold;">Grades 8–9</div>
-        <h3 style="margin-top:0.5rem;font-weight:bold;">Top-tier practice</h3>
-        <p style="color:#4b5563;margin-top:0.5rem;">Advanced problem solving, full past-paper practice, targeted marksmanship and higher-level techniques.</p>
-        <ul style="margin-top:0.5rem;color:#4b5563;">
-          <li>• Max 6 students</li>
-          <li>• Exam-conditions practice tests</li>
-          <li>• Detailed feedback and examiner-style marking</li>
-        </ul>
-        <button class="btn-orange" style="margin-top:0.5rem;" onclick="scrollToSection('contact')">Enrol / Book</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" class="bg-gray section">
-  <div class="container">
-    <h2 style="font-size:2rem;font-weight:bold;">Pricing</h2>
-    <p style="margin-top:0.5rem;color:#4b5563;">Simple pricing designed for clarity. All lessons are online. Packages include homework, progress checks and written feedback.</p>
-    <div class="grid grid-3" style="margin-top:1.5rem;">
-      <div class="card">
-        <div style="color:#fb923c;font-weight:bold;">Pay-as-you-go</div>
-        <div style="margin-top:0.5rem;font-size:2rem;font-weight:bold;">£29.99<span style="font-size:1rem;font-weight:500;"> / 60 mins</span></div>
-        <p style="color:#4b5563;margin-top:0.5rem;">Ideal for trial lessons or occasional tutoring.</p>
-        <ul style="color:#4b5563;margin-top:0.5rem;">
-          <li>• One-off lesson</li>
-          <li>• Homework & short feedback</li>
-        </ul>
-        <button class="btn-orange" style="margin-top:0.5rem;" onclick="scrollToSection('contact')">Book</button>
-      </div>
-      <div class="card">
-        <div style="color:#fb923c;font-weight:bold;">4-session package</div>
-        <div style="margin-top:0.5rem;font-size:2rem;font-weight:bold;">£99.99<span style="font-size:1rem;font-weight:500;"> / 4×60 mins</span></div>
-        <p style="color:#4b5563;margin-top:0.5rem;">Prepaid block with 16.7% discount. Progress note after session 2.</p>
-        <ul style="color:#4b5563;margin-top:0.5rem;">
-          <li>• Scheduled weekly or fortnightly</li>
-          <li>• Priority booking</li>
-        </ul>
-        <button class="btn-orange" style="margin-top:0.5rem;" onclick="scrollToSection('contact')">Buy package</button>
-      </div>
-      <div class="card">
-        <div style="color:#fb923c;font-weight:bold;">10-session package</div>
-        <div style="margin-top:0.5rem;font-size:2rem;font-weight:bold;">£199.99<span style="font-size:1rem;font-weight:500;"> / 10×60 mins</span></div>
-        <p style="color:#4b5563;margin-top:0.5rem;">Best value for intensive exam preparation. Progress report after session 5.</p>
-        <ul style="color:#4b5563;margin-top:0.5rem;">
-          <li>• Prepaid</li>
-          <li>• Flexible scheduling</li>
-        </ul>
-        <button class="btn-orange" style="margin-top:0.5rem;" onclick="scrollToSection('contact')">Buy package</button>
-      </div>
-    </div>
-    <p style="margin-top:1rem;font-size:0.75rem;color:#9ca3af;">Prices shown as a guideline — adjust to your market. Consider adding VAT if applicable.</p>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="container">
-    <h2 style="font-size:2rem;font-weight:bold;">What parents say</h2>
-    <div class="grid grid-3" style="margin-top:1.5rem;">
-      <div class="card">
-        <p style="font-weight:bold;">"My daughter's confidence has soared."</p>
-        <p style="color:#6b7280;margin-top:0.5rem;">— Parent of Year 11 student</p>
-      </div>
-      <div class="card">
-        <p style="font-weight:bold;">"Clear explanations and regular progress updates."</p>
-        <p style="color:#6b7280;margin-top:0.5rem;">— Parent of Year 10 student</p>
-      </div>
-      <div class="card">
-        <p style="font-weight:bold;">"Exam practice made all the difference."</p>
-        <p style="color:#6b7280;margin-top:0.5rem;">— Parent</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT FORM -->
-<section id="contact" class="bg-black text-white section">
-  <div class="container grid" style="grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap:2rem;">
-    <div>
-      <h2 style="font-size:2rem;font-weight:bold;">Book a free 20‑minute consultation</h2>
-      <p style="margin-top:0.5rem;color:#d1d5db;">Complete the form and we'll reply within 24 hours to confirm your preferred slot. Alternatively, note availability and we'll follow up.</p>
-      <ul style="margin-top:1rem;color:#d1d5db; font-size:0.875rem;">
-        <li>• Small classes for Years 10–11</li>
-        <li>• Grouping by target grade (3–5,6–7,8–9)</li>
-        <li>• Online lessons via Zoom</li>
-      </ul>
-      <p style="margin-top:1rem;font-size:0.75rem;color:#9ca3af;">By submitting you agree to our cancellation policy. We typically respond within 24 hours.</p>
-      <p style="color:#d1d5db; margin-top:0.5rem;">Email: Level_Up_Tutors@outlook.com</p>
-    </div>
-
-    <form id="contactForm" style="background:white;color:black;padding:1.5rem;border-radius:0.5rem;">
-      <input name="parentName" placeholder="Parent / Guardian name" required>
-      <input name="studentName" placeholder="Student name" required>
-<select name="year" required class="p-2 border rounded-md focus:border-orange-500 focus:ring-2 focus:ring-orange-300 transition">
-  <option value="" disabled selected>Select Year Group</option>
-  <option value="Year 10">Year 10</option>
-  <option value="Year 11">Year 11</option>
-</select>
-      <input name="gradeTarget" placeholder="Target grade (eg. 6)">
-      <input name="email" placeholder="Email" type="email" required>
-      <input name="phone" placeholder="Phone">
-      <textarea name="message" placeholder="Message / availability" rows="4"></textarea>
-      <button class="btn-orange" type="submit">Send booking request</button>
-      <p id="formSuccess" style="color:green; display:none; margin-top:0.5rem;">Thanks — booking request sent. We'll contact you shortly.</p>
-    </form>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  © <span id="year"></span> Level Up Tutors — Online GCSE Maths tuition • <span style="color:black;">Cancellation policy: 24‑hour notice</span>
-</footer>
-
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
-/* ---------- Scroll to section ---------- */
-function scrollToSection(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
-
-/* ---------- Sticky header ---------- */
-const header = document.querySelector('header');
-window.addEventListener('scroll',()=>{ 
-  if(window.scrollY>50){header.classList.add('scrolled');} else {header.classList.remove('scrolled');}
-});
-
-/* ---------- Section fade-in ---------- */
-const sections = document.querySelectorAll('.section');
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');}});
-},{threshold:0.1});
-sections.forEach(section=>observer.observe(section));
-
-/* ---------- Active nav highlight ---------- */
-const navButtons = document.querySelectorAll('nav button');
-window.addEventListener('scroll',()=>{
-  sections.forEach(section=>{
-    const rect = section.getBoundingClientRect();
-    if(rect.top<=100 && rect.bottom>=100){
-      navButtons.forEach(btn=>btn.classList.remove('active'));
-      document.querySelector(`nav button[data-target='${section.id}']`)?.classList.add('active');
+    // scroll helper
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:'smooth'});
     }
-  });
-});
 
-/* ---------- Contact form ---------- */
-document.getElementById('contactForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  document.getElementById('formSuccess').style.display='block';
-  setTimeout(()=>{document.getElementById('formSuccess').style.display='none';},4000);
-  this.reset();
-});
-</script>
+    // header shift-up when scrolling
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', ()=> {
+      if(window.scrollY > 60) header.classList.add('shift-up');
+      else header.classList.remove('shift-up');
+    }, {passive:true});
 
+    // Active nav highlight based on viewport
+    const navButtons = Array.from(document.querySelectorAll('.nav-right button'));
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const id = entry.target.id;
+          navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.target === id));
+        }
+      });
+    }, {threshold: 0.45});
+
+    sections.forEach(s => observer.observe(s));
+
+    // Contact form demo behaviour (kept exactly as Set C)
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm){
+      contactForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        document.getElementById('formSuccess').style.display = 'block';
+        setTimeout(()=>{ document.getElementById('formSuccess').style.display='none'; }, 4000);
+        contactForm.reset();
+      });
+    }
+  </script>
 </body>
 </html>
-
-
-
