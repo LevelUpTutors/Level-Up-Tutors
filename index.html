@@ -44,6 +44,92 @@
     a { text-decoration:none; color:inherit; transition: color 0.3s; }
     button { font-family:inherit; }
 
+/* -------------------- MOBILE CLEANUP -------------------- */
+@media (max-width: 700px) {
+
+  /* Reduce header height */
+  header {
+    padding: 0.5rem 0;
+  }
+
+  .header-inner {
+    gap: 0.4rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Logo smaller */
+  .logo-left img {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Title + subtitle sizing */
+  .brand-center .title {
+    font-size: 1.4rem;
+  }
+
+  .brand-center .subtitle {
+    font-size: 0.85rem;
+  }
+
+  /* CLEAN INLINE NAV */
+  .nav-right nav {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-right button {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+
+  /* Reduce hero section height */
+  .home-hero {
+    padding: 4rem 1rem;
+  }
+
+  .home-hero h1 {
+    font-size: 2rem;
+  }
+
+  .home-hero p {
+    font-size: 1rem;
+  }
+
+  /* Cleaner card spacing */
+  .card {
+    padding: 1rem;
+  }
+
+  .grid,
+  .class-grid,
+  .price-grid,
+  .test-grid {
+    gap: 12px;
+  }
+
+  /* Section spacing */
+  .section {
+    padding: 40px 0;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Prevent iPhone autofill turning inputs white */
+  input, textarea, select {
+    background: #0b0b0b !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+}
+
+
     /* HEADER FIXED AT TOP */
     header {
       position: fixed !important;
@@ -313,7 +399,7 @@
     <div class="container">
       <h2>About</h2>
       <p class="muted" style="max-width:880px;margin-top:1rem;">Level Up Tutors provides personalised, high-quality GCSE Maths tuition for students in Years 10 and 11.</p>
-      <p class="muted" style="max-width:880px;margin-top:0.75rem;">Students join one of three small classes grouped by target grade so every lesson is paced correctly and focused on exam skills.</p>
+      <p class="muted" style="max-width:1000px;margin-top:0.75rem;">Students join one of three small classes grouped by target grade so every lesson is paced correctly and focused on exam skills.</p>
       <p class="muted" style="max-width:880px;margin-top:0.75rem;">We build confidence, understanding, and long-term mastery.</p>
 
       <div class="grid grid-3" style="margin-top:1.25rem;">
