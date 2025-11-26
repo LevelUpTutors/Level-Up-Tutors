@@ -42,251 +42,202 @@
     a { text-decoration:none; color:inherit; transition: color 0.3s; }
     button { font-family:inherit; }
 
-/* -------------------- MOBILE CLEANUP -------------------- */
+/* Updated CSS with mobile logo-to-left layout */
+
+/* ---------------------------------------------------------
+   BASE HEADER (DESKTOP / TABLET)
+---------------------------------------------------------- */
+
+header {
+  position: fixed !important;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 60;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  transition: none !important;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Left logo */
+.logo-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 180px;
+}
+.logo-left img {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Center branding */
+.brand-center {
+  text-align: center;
+  flex: 1 1 auto;
+}
+.brand-center .title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+.brand-center .subtitle {
+  margin-top: 0.15rem;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  color: var(--muted-2);
+}
+
+/* Right nav */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 260px;
+  justify-content: flex-end;
+}
+.nav-right nav {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.nav-right button {
+  background: none;
+  border: none;
+  color: var(--nav-text);
+  cursor: pointer;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+.nav-right button:hover,
+.nav-right button:focus {
+  color: var(--accent);
+  transform: translateY(-2px);
+  background: rgba(251,146,60,0.06);
+}
+.nav-right button.active {
+  color: var(--accent);
+  background: rgba(251,146,60,0.08);
+}
+
+/* ---------------------------------------------------------
+   TABLET BREAKPOINT (≤880px)
+---------------------------------------------------------- */
+
+@media(max-width: 880px) {
+  .logo-left img { width: 56px; height: 56px; }
+  .brand-center .title { font-size: 1.4rem; }
+  .nav-right { min-width: 140px; }
+}
+
+/* ---------------------------------------------------------
+   MOBILE CLEANUP (≤700px)
+   — Logo moves to the LEFT of the title
+---------------------------------------------------------- */
+
+/* Desktop/tablet — neutralize wrapper */
+.mobile-header-row {
+  display: contents;   /* behaves like it doesn't exist */
+}
+
+@media (max-width: 700px) {
+  .nav-right button:nth-child(6) {
+    display: none !important;
+  }
+}
+
 @media (max-width: 700px) {
 
-  /* Reduce header height */
   header {
     padding: 0.5rem 0;
   }
 
+  /* New horizontal row for logo + title */
+  .mobile-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+  }
+
   .header-inner {
-    gap: 0.4rem;
     flex-direction: column;
+    gap: 0.6rem;
     align-items: center;
   }
 
-  /* Logo smaller */
+  /* Logo next to title */
+  .logo-left {
+    min-width: auto;
+    justify-content: center;
+  }
   .logo-left img {
     width: 48px;
     height: 48px;
   }
 
-  /* Title + subtitle sizing */
-  .brand-center .title {
-    font-size: 1.4rem;
-  }
-
-  .brand-center .subtitle {
-    font-size: 0.85rem;
-  }
-
-/* -------------------- EXTRA MOBILE POLISH -------------------- */
-@media (max-width: 700px) {
-
-  /* Premium subtle shadow to separate header from content */
-  header {
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-  }
-
-  /* Slightly tighter spacing inside header */
-  .header-inner {
-    gap: 0.25rem;
-  }
-
-  /* Clean, minimal nav buttons */
-  .nav-right button {
-    padding: 0.3rem 0.45rem;
-    font-size: 0.82rem;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.06); /* subtle frosted look */
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(3px);
-  }
-
-  /* Tone down hover for touch screens */
-  .nav-right button:hover {
-    transform: none !important;
-    background: rgba(255, 255, 255, 0.12);
-  }
-
-  /* Fix long text wrapping cleanly */
-  .nav-right nav {
-    flex-wrap: wrap;
-    row-gap: 0.4rem;
-  }
-
-  /* Better alignment for title area */
+  /* Title beside logo → left aligned for better readability */
   .brand-center {
-    text-align: center;
-    width: 100%;
+    text-align: left;
   }
-}
+  .brand-center .title { font-size: 1.6rem; }
+  .brand-center .subtitle { font-size: 0.9rem; }
 
-
-  /* CLEAN INLINE NAV */
+  /* Nav stays below */
+  .nav-right {
+    order: 3;
+    justify-content: center;
+    min-width: auto;
+  }
   .nav-right nav {
-    display: flex;
     gap: 0.3rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .nav-right button {
     padding: 0.35rem 0.5rem;
     font-size: 0.85rem;
-    border-radius: 5px;
   }
 
-  /* Reduce hero section height */
+  /* Other mobile layout cleanup */
   .home-hero {
     padding: 4rem 1rem;
   }
+  .home-hero h1 { font-size: 2rem; }
+  .home-hero p { font-size: 1rem; }
 
-  .home-hero h1 {
-    font-size: 2rem;
-  }
-
-  .home-hero p {
-    font-size: 1rem;
-  }
-
-  /* Cleaner card spacing */
-  .card {
-    padding: 1rem;
-  }
-
+  .card { padding: 1rem; }
   .grid,
   .class-grid,
   .price-grid,
-  .test-grid {
-    gap: 12px;
-  }
+  .test-grid { gap: 12px; }
 
-  /* Section spacing */
-  .section {
-    padding: 40px 0;
-  }
+  .section { padding: 40px 0; }
+  h2 { font-size: 1.5rem; }
 
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  /* Prevent iPhone autofill turning inputs white */
   input, textarea, select {
     background: #0b0b0b !important;
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
   }
 }
-
-
-    /* HEADER FIXED AT TOP */
-    header {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 60;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid var(--border);
-      padding:1rem 0;
-
-      /* Removed shift-up transforms */
-      transition: none !important;
-    }
-
-    .header-inner {
-      display:flex;
-      align-items:center;
-      gap:1rem;
-      justify-content:space-between;
-      width: 100%;
-    }
-
-    /* left logo */
-    .logo-left {
-      display:flex;
-      align-items:center;
-      gap:0.85rem;
-      min-width:180px;
-    }
-    .logo-left img {
-      width:72px;
-      height:72px;
-      border-radius:8px;
-      object-fit:cover;
-      display:block;
-    }
-
-    /* centre title */
-    .brand-center {
-      text-align:center;
-      flex:1 1 auto;
-    }
-.brand-center .title {
-    font-size: 2rem;            /* Your chosen size */
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    line-height: 1.2;
-}
-
-.brand-center .subtitle {
-    font-size: 1rem;            /* Balanced subtitle size */
-    color: var(--muted-2);
-    margin-top: 0.15rem;
-    letter-spacing: 0.3px;
-}
-
-
-    /* right nav */
-    .nav-right {
-      display:flex;
-      align-items:center;
-      gap:1rem;
-      min-width:260px;
-      justify-content:flex-end;
-    }
-    .nav-right nav { display:flex; gap:0.6rem; align-items:center; }
-
-    .nav-right button {
-      background:none;
-      border:none;
-      color:var(--nav-text);
-      cursor:pointer;
-      padding:0.45rem 0.6rem;
-      border-radius:6px;
-      font-weight:600;
-      transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
-      font-size:0.98rem;
-    }
-
-    .nav-right button:hover,
-    .nav-right button:focus {
-      color:var(--accent);
-      outline:none;
-      transform:translateY(-2px);
-      background: rgba(251,146,60,0.06);
-    }
-    .nav-right button.active {
-      color:var(--accent);
-      background: rgba(251,146,60,0.08);
-    }
-
-    /* mobile */
-    @media(max-width:880px){
-      .logo-left img { width:56px; height:56px; }
-      .brand-center .title { font-size:1rem; }
-      .nav-right { min-width:120px; }
-    }
-    @media(max-width:700px){
-      .header-inner { flex-direction:column; gap:0.6rem; align-items:stretch; }
-      .logo-left { justify-content:center; min-width:auto; }
-      .brand-center { order:2; }
-      .nav-right { justify-content:center; order:3; }
-    }
-
-    @media(max-width:700px){
-      .brand-center .title {
-      font-size: 1.6rem;
-    }
-    .brand-center .subtitle {
-      font-size: 0.9rem;
-    }
-   }
-
-
 
     /* ----------------- HOME ----------------- */
  
@@ -394,9 +345,12 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header id="siteHeader">
-    <div class="container header-inner">
+<!-- HEADER -->
+<header id="siteHeader">
+  <div class="container header-inner">
+
+    <!-- The NEW wrapper: logo + title -->
+    <div class="mobile-header-row">
 
       <div class="logo-left">
         <img src="assets/logo.png" alt="Level Up Tutors Logo">
@@ -407,8 +361,7 @@
         <div class="subtitle">GCSE Maths — Years 10 &amp; 11</div>
       </div>
 
-
-
+    </div>
 
       <div class="nav-right">
         <nav>
@@ -420,6 +373,17 @@
           <button data-target="contact" onclick="scrollToSection('contact')">Contact</button>
         </nav>
       </div>
+
+  
+  </div>
+</header>
+
+
+
+
+
+
+
 
     </div>
   </header>
@@ -616,3 +580,4 @@ function scrollToSection(id) {
 
 </body>
 </html>
+
