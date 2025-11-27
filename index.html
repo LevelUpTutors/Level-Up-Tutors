@@ -381,15 +381,6 @@ header {
 </header>
 
 
-
-
-
-
-
-
-    </div>
-  </header>
-
   <!-- HOME -->
   <section id="home" class="home-hero">
     <div class="container">
@@ -492,16 +483,8 @@ header {
         <p class="muted" style="margin-top:0.5rem">Book a free 20-minute consultation.</p>
       </div>
 
-<form id="contactForm" class="form-card" action="https://api.web3forms.com/submit" method="POST">
+<form id="contactForm" class="form-card">
 
-  <!-- Web3Forms Access Key -->
-  <input type="hidden" name="access_key" value="fbc8a763-c973-401b-b7f5-1384077e38e9">
-
-  <!-- Optional: Email subject -->
-  <input type="hidden" name="subject" value="New Booking Request from Level Up Tutors">
-
-  <!-- Honeypot (spam protection) -->
-  <input type="checkbox" name="botcheck" style="display:none;">
 
   <input name="parentName" placeholder="Parent / Guardian name" required>
   <input name="studentName" placeholder="Student name" required>
@@ -539,6 +522,11 @@ header {
   <p id="formError" style="color:#e57373;display:none;margin-top:0.5rem;">Something went wrong. Please try again.</p>
 
 </form>
+
+
+
+
+
 
     </div>
   </section>
@@ -586,43 +574,51 @@ function scrollToSection(id) {
 
     sections.forEach(s => observer.observe(s));
 
-// Contact form (Web3Forms)
-const contactForm = document.getElementById("contactForm");
-const successMsg = document.getElementById("formSuccess");
-const errorMsg = document.getElementById("formError");
-
-contactForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  successMsg.style.display = "none";
-  errorMsg.style.display = "none";
-
-  const formData = new FormData(contactForm);
-
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    body: formData
-  });
-
-  const result = await response.json();
-
-  if (response.ok) {
-    successMsg.style.display = "block";
-    contactForm.reset();
-
-    setTimeout(() => {
-      successMsg.style.display = "none";
-    }, 4000);
-
-  } else {
-    errorMsg.textContent = result.message || "Something went wrong.";
-    errorMsg.style.display = "block";
-  }
-});
-
-
-
   </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  emailjs.init("vAwzb-CZ4RWBjZXZb");
+
+  const contactForm = document.getElementById("contactForm");
+  const successMsg = document.getElementById("formSuccess");
+  const errorMsg = document.getElementById("formError");
+
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    successMsg.style.display = "none";
+    errorMsg.style.display = "none";
+
+    const autoResponse = emailjs.sendForm(
+      "service_fj8udhp",
+      "template_fhz5p7r", // auto-response to parent
+      this
+    );
+
+    const notifyYou = emailjs.sendForm(
+      "service_fj8udhp",
+      "template_8tqim0m", // email to you
+      this
+    );
+
+    Promise.all([autoResponse, notifyYou])
+      .then(() => {
+        successMsg.style.display = "block";
+        contactForm.reset();
+
+        setTimeout(() => {
+          successMsg.style.display = "none";
+        }, 4000);
+      })
+      .catch((err) => {
+        console.log("EmailJS Error:", err);
+        errorMsg.style.display = "block";
+      });
+  });
+</script>
+
 
 </body>
 </html>
