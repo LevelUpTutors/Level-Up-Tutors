@@ -47,6 +47,25 @@ section {
   scroll-margin-top: 50px; /* adjust if needed */
 }
 
+.btn-secondary {
+  border: 2px solid var(--accent);
+  background: transparent; /* keeps background dark/transparent */
+  color: var(--accent);
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  border-color: #f97316;
+  color: #f97316;
+  background: rgba(251,146,60,0.08); /* optional subtle hover background */
+}
+
+
 
 /* Updated CSS with mobile logo-to-left layout */
 
@@ -404,12 +423,10 @@ header {
       <h1>Empowering Students to <span style="color:var(--accent);">Level Up</span> Their Learning</h1>
       <p>Private tutoring designed to build confidence, mastery, and academic excellence.</p>
       <div class="home-cta">
-        <a href="#pricing" class="btn-secondary">Book a Session</a>
-<a href="#contact" class="btn-secondary">Book Consultation</a>
-        <a href="#classes" class="btn-secondary">View Classes</a>
-
-
-      </div>
+  <button class="btn-secondary" onclick="scrollToSection('pricing')">Book a Session</button>
+  <button class="btn-secondary" onclick="scrollToSection('contact')">Book Consultation</button>
+  <button class="btn-secondary" onclick="scrollToSection('classes')">View Classes</button>
+</div>
     </div>
   </section>
 
