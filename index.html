@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Level Up Tutors</title>
   <link href="https://fonts.googleapis.com/css2?family=Obitron&display=swap" rel="stylesheet">
+
   <style>
 
     :root{
@@ -41,6 +42,11 @@
     ul { padding-left:1.25rem; margin:0; }
     a { text-decoration:none; color:inherit; transition: color 0.3s; }
     button { font-family:inherit; }
+
+section {
+  scroll-margin-top: 50px; /* adjust if needed */
+}
+
 
 /* Updated CSS with mobile logo-to-left layout */
 
@@ -258,9 +264,13 @@ header {
     .home-hero p { opacity:0.8; max-width:700px; margin:1.5rem auto 0; font-size:1.3rem; }
     .home-cta { display:flex; justify-content:center; gap:1.5rem; margin-top:2.5rem; }
     .home-cta .btn-primary { background:var(--accent); color:#000; padding:1rem 2rem; border-radius:50px; font-size:1.2rem; font-weight:600; display:inline-block; }
-    .home-cta .btn-primary:hover{ background:#ffb672; }
+    .home-cta .btn-primary:hover {
+          transform: translateY(-3px);
+          background: #ea580c; /* darker orange */
+          }
+
     .home-cta .btn-secondary { border:2px solid var(--accent); color:var(--accent); padding:1rem 2rem; border-radius:50px; font-size:1.2rem; display:inline-block; }
-    .home-cta .btn-secondary:hover{ border-color:#fff; color:#fff; }
+    .home-cta .btn-secondary:hover{ border-color:#f97316; color:#f97316; transform: translateY(-3px); }
 
     /* ----------------- General sections ----------------- */
     .section { padding:64px 0; }
@@ -324,7 +334,7 @@ header {
     }
     .btn-primary:hover {
       transform: translateY(-3px);
-      background: #f97316;
+      background: #ea580c;
     }
 
     .btn-outline {
@@ -342,6 +352,13 @@ header {
       border-color: #f97316;
       color: #f97316;
     }
+
+
+  /* Cards */
+  .card { padding:1.5rem; background:black; transition: transform 0.3s, box-shadow 0.3s; }
+  .card:hover { transform: translateY(-5px); box-shadow:0 10px 15px rgba(251, 146, 60, 0.5); }
+  .border-l-orange { border-left:4px solid #fb923c; }
+
 
   </style>
 </head>
@@ -387,8 +404,11 @@ header {
       <h1>Empowering Students to <span style="color:var(--accent);">Level Up</span> Their Learning</h1>
       <p>Private tutoring designed to build confidence, mastery, and academic excellence.</p>
       <div class="home-cta">
-        <a href="#contact" class="btn-primary">Book a Session</a>
+        <a href="#pricing" class="btn-secondary">Book a Session</a>
+<a href="#contact" class="btn-secondary">Book Consultation</a>
         <a href="#classes" class="btn-secondary">View Classes</a>
+
+
       </div>
     </div>
   </section>
@@ -443,21 +463,42 @@ header {
   <section id="pricing" class="section bg-dark">
     <div class="container">
       <h2>Pricing</h2>
-      <div class="price-grid" style="margin-top:1rem;">
-        <div class="card">
-          <h3 style="color:var(--accent);font-weight:700">Pay-as-you-go</h3>
-          <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">£29.99 <span style="font-size:0.85rem;font-weight:500">/ 60 mins</span></div>
-          <p class="muted" style="margin-top:0.5rem">Perfect for occasional lessons.</p>
-        </div>
-        <div class="card">
-          <h3 style="color:var(--accent);font-weight:700">4-session package</h3>
-          <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">£99.99 <span style="font-size:0.85rem;font-weight:500">/ 4×60 mins</span></div>
-          <p class="muted" style="margin-top:0.5rem">Includes progression notes.</p>
-        </div>
-        <div class="card">
-          <h3 style="color:var(--accent);font-weight:700">10-session package</h3>
-          <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">£199.99 <span style="font-size:0.85rem;font-weight:500">/ 10×60 mins</span></div>
-          <p class="muted" style="margin-top:0.5rem">Best value for exam prep. Includes mid-point report.</p>
+      
+        
+<div class="price-grid" style="margin-top:1rem;">
+
+  <div class="card">
+    <h3 style="color:var(--accent);font-weight:700">1-session package</h3>
+    <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
+      £29.99 <span style="font-size:0.85rem;font-weight:500">/ 60 mins</span>
+    </div>
+    <p class="muted" style="margin-top:0.5rem">Perfect for occasional lessons. <br> <br></p>
+    
+    <button class="btn-primary" style="margin-top:1rem;">Enroll</button>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--accent);font-weight:700">4-session package</h3>
+    <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
+      £99.99 <span style="font-size:0.85rem;font-weight:500">/ 4×60 mins</span>
+    </div>
+    <p class="muted" style="margin-top:0.5rem">Includes progression notes.<br> <br></p>
+    
+    <button class="btn-primary" style="margin-top:1rem;">Enroll</button>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--accent);font-weight:700">10-session package</h3>
+    <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
+      £199.99 <span style="font-size:0.85rem;font-weight:500">/ 10×60 mins</span>
+    </div>
+    <p class="muted" style="margin-top:0.5rem">Best value for exam prep. Includes mid-point report.</p>
+    
+    <button class="btn-primary" style="margin-top:1rem;">Enroll</button>
+ 
+
+</div>
+
         </div>
       </div>
     </div>
@@ -523,11 +564,6 @@ header {
 
 </form>
 
-
-
-
-
-
     </div>
   </section>
 
@@ -542,6 +578,13 @@ header {
     document.getElementById("year").textContent = new Date().getFullYear();
 
 function scrollToSection(id) {
+  if (id === "home") {
+    // Force scroll to page very top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  // Normal behaviour for all other sections
   const el = document.getElementById(id);
   const header = document.getElementById("siteHeader");
 
@@ -549,7 +592,8 @@ function scrollToSection(id) {
 
   const headerHeight = header.offsetHeight;
   const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
-  const offsetPosition = elementPosition - 50; // -10px for nice spacing
+
+  const offsetPosition = elementPosition - headerHeight  + 50;
 
   window.scrollTo({
     top: offsetPosition,
