@@ -161,6 +161,7 @@ header {
   background: rgba(251,146,60,0.08);
 }
 
+
 /* ---------------------------------------------------------
    TABLET BREAKPOINT (≤880px)
 ---------------------------------------------------------- */
@@ -484,34 +485,59 @@ header {
         
 <div class="price-grid" style="margin-top:1rem;">
 
-  <div class="card">
-    <h3 style="color:var(--accent);font-weight:700">1-session package</h3>
-    <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
-      £29.99 <span style="font-size:0.85rem;font-weight:500">/ 60 mins</span>
-    </div>
-    <p class="muted" style="margin-top:0.5rem">Perfect for occasional lessons. <br> <br></p>
-    
-    <button class="btn-primary" style="margin-top:1rem;">Enroll</button>
-  </div>
+<!-- 1 SESSION -->
 
-  <div class="card">
-    <h3 style="color:var(--accent);font-weight:700">4-session package</h3>
-    <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
-      £99.99 <span style="font-size:0.85rem;font-weight:500">/ 4×60 mins</span>
-    </div>
-    <p class="muted" style="margin-top:0.5rem">Includes progression notes.<br> <br></p>
-    
-    <button class="btn-primary" style="margin-top:1rem;">Enroll</button>
+<div class="card">
+  <h3 style="color:var(--accent);font-weight:700">1-session package</h3>
+  <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
+    £29.99 <span style="font-size:0.85rem;font-weight:500">/ 60 mins</span>
   </div>
+  <p class="muted" style="margin-top:0.5rem">Perfect for occasional lessons.<br><br></p>
+  
+  <!-- Stripe Checkout Buttons -->
+  <button class="btn-primary" onclick="checkout('price_1SYFrbKx910Jb5CQ9iQduHYd', false)" style="margin-top:1rem;">One-off Purchase</button>
+  <button class="btn-primary" onclick="checkout('price_1SYFrbKx910Jb5CQr6YyodIo', true)" style="margin-top:0.75rem;">Weekly Subscription</button>
+</div>
 
-  <div class="card">
-    <h3 style="color:var(--accent);font-weight:700">10-session package</h3>
-    <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
-      £199.99 <span style="font-size:0.85rem;font-weight:500">/ 10×60 mins</span>
-    </div>
-    <p class="muted" style="margin-top:0.5rem">Best value for exam prep. Includes mid-point report.</p>
-    
-    <button class="btn-primary" style="margin-top:1rem;">Enroll</button>
+<!-- 4 SESSIONS -->
+
+<div class="card">
+  <h3 style="color:var(--accent);font-weight:700">4-session package</h3>
+  <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
+    £99.99 <span style="font-size:0.85rem;font-weight:500">/ 4×60 mins</span>
+  </div>
+  <p class="muted" style="margin-top:0.5rem">Includes progression notes.<br><br></p>
+
+  <!-- One-off -->
+  <button class="btn-primary"
+          style="margin-top:1rem;"
+          onclick="checkout('price_1SYEzKKx910Jb5CQjqR5PH7R', false)">
+    One-off Purchase
+  </button>
+
+  <!-- Recurring -->
+  <button class="btn-primary"
+          style="margin-top:0.75rem;"
+          onclick="checkout('price_1SYFtGKx910Jb5CQf2OO0UDL', true)">
+    Monthly Subscription
+  </button>
+</div>
+
+<!-- 10 SESSIONS -->
+
+<div class="card">
+  <h3 style="color:var(--accent);font-weight:700">10-session package</h3>
+  <div style="margin-top:0.5rem;font-size:1.25rem;font-weight:700">
+    £199.99 <span style="font-size:0.85rem;font-weight:500">/ 10×60 mins</span>
+  </div>
+  <p class="muted" style="margin-top:0.5rem">Best value for exam prep. Includes mid-point report.</p>
+
+  <!-- One-off -->
+  <button class="btn-primary"
+          style="margin-top:1rem;"
+          onclick="checkout('price_1SYFvmKx910Jb5CQ6sd3xoyJ', false)">
+    Buy 10 Session Pack
+  </button>
  
 
 </div>
@@ -678,6 +704,25 @@ function scrollToSection(id) {
         errorMsg.style.display = "block";
       });
   });
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+  const stripe = Stripe("pk_test_51SYBNpKx910Jb5CQUw111w9v1fc2uZGgwiBWcvAMEQtCWkJDKONRsce6YUxNDZJkt59Sink5SaXTaLheKxba7mYa00W3AbAsNj");
+
+  function checkout(priceId) {
+    fetch("http://127.0.0.1:4242/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priceId: priceId })
+    })
+    .then(res => res.json())
+    .then(data => stripe.redirectToCheckout({ sessionId: data.id }))
+    .catch(err => {
+        console.error(err);
+        alert("Error connecting to payment server");
+    });
+  }
 </script>
 
 
