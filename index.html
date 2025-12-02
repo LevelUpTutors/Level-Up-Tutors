@@ -381,6 +381,9 @@ header {
 
 
   </style>
+
+<script src="https://js.stripe.com/v3/"></script>
+
 </head>
 <body>
 
@@ -495,8 +498,14 @@ header {
   <p class="muted" style="margin-top:0.5rem">Perfect for occasional lessons.<br><br></p>
   
   <!-- Stripe Checkout Buttons -->
-  <button class="btn-primary" onclick="checkout('price_1SYFrbKx910Jb5CQ9iQduHYd', false)" style="margin-top:1rem;">One-off Purchase</button>
-  <button class="btn-primary" onclick="checkout('price_1SYFrbKx910Jb5CQr6YyodIo', true)" style="margin-top:0.75rem;">Weekly Subscription</button>
+
+  <button class="btn-primary" onclick="window.open('https://buy.stripe.com/5kQcN61rc8om64ne071ZS04', '_blank')" 
+	style="margin-top:1rem;">
+		One-off Purchase</button>
+
+  <button class="btn-primary"  onclick="window.open('https://buy.stripe.com/3cI7sM6LwbAyeATaNV1ZS05', '_blank')"
+	style="margin-top:0.75rem;">
+		Weekly Subscription</button>
 </div>
 
 <!-- 4 SESSIONS -->
@@ -511,17 +520,18 @@ header {
   <!-- One-off -->
   <button class="btn-primary"
           style="margin-top:1rem;"
-          onclick="checkout('price_1SYEzKKx910Jb5CQjqR5PH7R', false)">
+          onclick="window.open('https://buy.stripe.com/3cI14o1rcfQOeAT2hp1ZS02', '_blank')">
     One-off Purchase
   </button>
 
   <!-- Recurring -->
   <button class="btn-primary"
           style="margin-top:0.75rem;"
-          onclick="checkout('price_1SYFtGKx910Jb5CQf2OO0UDL', true)">
+          onclick="window.open('https://buy.stripe.com/eVq7sMfi29sqeATaNV1ZS03', '_blank')">
     Monthly Subscription
   </button>
 </div>
+
 
 <!-- 10 SESSIONS -->
 
@@ -535,9 +545,12 @@ header {
   <!-- One-off -->
   <button class="btn-primary"
           style="margin-top:1rem;"
-          onclick="checkout('price_1SYFvmKx910Jb5CQ6sd3xoyJ', false)">
+          onclick="window.open('https://buy.stripe.com/4gMbJ2b1M3423Wf2hp1ZS06', '_blank')">
+    
     Buy 10 Session Pack
   </button>
+</div>
+
  
 
 </div>
@@ -660,14 +673,15 @@ function scrollToSection(id) {
     }, {threshold:0.45});
 
     sections.forEach(s => observer.observe(s));
-
   </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-  emailjs.init("vAwzb-CZ4RWBjZXZb");
+  emailjs.init("vAwzb-CZ4RWBjZXZb"); 
+</script>
 
+<script>
   const contactForm = document.getElementById("contactForm");
   const successMsg = document.getElementById("formSuccess");
   const errorMsg = document.getElementById("formError");
@@ -704,8 +718,7 @@ function scrollToSection(id) {
         errorMsg.style.display = "block";
       });
   });
-
-<script src="https://js.stripe.com/v3/"></script>
+</script>
 
 <script>
   const stripe = Stripe("pk_test_51SYBNpKx910Jb5CQUw111w9v1fc2uZGgwiBWcvAMEQtCWkJDKONRsce6YUxNDZJkt59Sink5SaXTaLheKxba7mYa00W3AbAsNj");
@@ -725,6 +738,6 @@ function scrollToSection(id) {
   }
 </script>
 
-
 </body>
 </html>
+
