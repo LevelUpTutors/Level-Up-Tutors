@@ -30,7 +30,7 @@
       -moz-osx-font-smoothing:grayscale;
 
       /* Added padding so fixed header doesn't cover content */
-      padding-top: 70px;
+      padding-top: 70px; /*110px will prevent "About" from being shown*/
     }
 
       .title .highlight {
@@ -181,6 +181,18 @@ header {
 .mobile-header-row {
   display: contents;   /* behaves like it doesn't exist */
 }
+
+
+@media (max-width: 700px) {
+  .home-hero {
+    padding: 1rem 1rem !important;   /* smaller top/bottom padding */
+    min-height: calc(100vh - 140px) !important; /* adjust for mobile header */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
 
 
 @media (max-width: 700px) {
@@ -425,10 +437,6 @@ header {
     margin-right: 50px;               /* ensures it's fully right-aligned */
   }
 
- .home-hero {
-    padding-top: 0rem; /* increase top padding for mobile */
-    min-height: calc(100vh - 300px); /* optional: adjust height if needed */
-  }
 
   /* Optional: reduce spacing */
   .brand-center {
@@ -486,10 +494,8 @@ header {
 
 }
 
-
   </style>
 
-<script src="https://js.stripe.com/v3/"></script>
 
 </head>
 <body>
@@ -844,24 +850,6 @@ function scrollToSection(id) {
   });
 </script>
 
-<script>
-  const stripe = Stripe("pk_test_51SYBNpKx910Jb5CQUw111w9v1fc2uZGgwiBWcvAMEQtCWkJDKONRsce6YUxNDZJkt59Sink5SaXTaLheKxba7mYa00W3AbAsNj");
-
-  function checkout(priceId) {
-    fetch("http://127.0.0.1:4242/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priceId: priceId })
-    })
-    .then(res => res.json())
-    .then(data => stripe.redirectToCheckout({ sessionId: data.id }))
-    .catch(err => {
-        console.error(err);
-        alert("Error connecting to payment server");
-    });
-  }
-
-</script>
 
 <script>
   const hamburger = document.getElementById("hamburger");
@@ -886,4 +874,3 @@ function scrollToSection(id) {
 
 </body>
 </html>
-
