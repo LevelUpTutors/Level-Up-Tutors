@@ -746,37 +746,34 @@ header {
 
 function scrollToSection(id) {
   if (id === "home") {
-    // Force scroll to page very top
     window.scrollTo({ top: 0, behavior: "smooth" });
     return;
   }
 
-  // Normal behaviour for all other sections
   const el = document.getElementById(id);
   const header = document.getElementById("siteHeader");
+  const mobileHeaderRow = document.querySelector(".mobile-header-row");
 
   if (!el || !header) return;
 
-  const headerHeight = header.offsetHeight;
   const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+  let offsetPosition;
 
-let offset = headerHeight;
-
-  // On mobile, scroll so section top aligns directly under header
   if (window.innerWidth <= 700) {
-    offset = headerHeight - 390; // optional: slight adjustment if needed
+    // Mobile: use the height of only the visible top row
+    const mobileHeaderHeight = mobileHeaderRow.offsetHeight - 20;
+    offsetPosition = elementPosition - mobileHeaderHeight;
   } else {
-    offset = headerHeight - 50; // desktop offset for spacing
+    // Desktop: full header height plus some spacing
+    const desktopHeaderHeight = header.offsetHeight;
+    offsetPosition = elementPosition - desktopHeaderHeight + 50;
   }
-
-  const offsetPosition = elementPosition - offset;
 
   window.scrollTo({
     top: offsetPosition,
     behavior: "smooth"
   });
 }
-
 
     // Highlight nav buttons while scrolling
     const navButtons = [...document.querySelectorAll(".nav-right button")];
@@ -882,4 +879,3 @@ let offset = headerHeight;
 
 </body>
 </html>
-
