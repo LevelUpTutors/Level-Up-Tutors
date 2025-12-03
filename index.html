@@ -760,7 +760,16 @@ function scrollToSection(id) {
   const headerHeight = header.offsetHeight;
   const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
 
-  const offsetPosition = elementPosition - headerHeight  + 50;
+let offset = headerHeight;
+
+  // On mobile, scroll so section top aligns directly under header
+  if (window.innerWidth <= 700) {
+    offset = headerHeight - 390; // optional: slight adjustment if needed
+  } else {
+    offset = headerHeight - 50; // desktop offset for spacing
+  }
+
+  const offsetPosition = elementPosition - offset;
 
   window.scrollTo({
     top: offsetPosition,
@@ -873,3 +882,4 @@ function scrollToSection(id) {
 
 </body>
 </html>
+
